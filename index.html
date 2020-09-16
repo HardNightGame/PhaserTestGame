@@ -26,7 +26,7 @@
             update: update
         }
     };
-
+    var cursors;
     var game = new Phaser.Game(config);
 
     var directions = {
@@ -73,8 +73,6 @@
     var tileWidthHalf;
     var tileHeightHalf;
 
-    var d = 0;
-
     var scene;
 
     function preload ()
@@ -88,6 +86,9 @@
     function create ()
     {
         scene = this;
+
+        //  Input Events
+        cursors = this.input.keyboard.createCursorKeys();
 
         //  Our Skeleton class
 
@@ -276,24 +277,21 @@
         });
 
         // return;
-
-        if (d)
+        if (cursors.left.isDown && this.cameras.main.scrollX > 0)
         {
-            this.cameras.main.scrollX -= 0.5;
-
-            if (this.cameras.main.scrollX <= 0)
-            {
-                d = 0;
-            }
+            this.cameras.main.scrollX -= 5;
         }
-        else
+        else if (cursors.right.isDown && this.cameras.main.scrollX < 800)
         {
-            this.cameras.main.scrollX += 0.5;
-
-            if (this.cameras.main.scrollX >= 800)
-            {
-                d = 1;
-            }
+            this.cameras.main.scrollX += 5;
+        }
+        if (cursors.down.isDown && this.cameras.main.scrollY < 600)
+        {
+            this.cameras.main.scrollY += 5;
+        }
+        else if (cursors.up.isDown && this.cameras.main.scrollX > 0)
+        {
+            this.cameras.main.scrollY -= 5;
         }
     }
 
